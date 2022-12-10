@@ -535,7 +535,7 @@ public class TefilaRules {
 	 * The Aruch Hashulchan is of the opinion that that this <em>minhag</em> is incorrect, and it should be recited, and The Chazon
 	 * Ish also recited <em>tachanun</em> during this period. See the Dirshu edition of the Mishna Berurah for details.
 	 * @return If <em>tachanun</em> is set to be recited at the end of {@link JewishDate#TISHREI <em>Tishrei</em>}.
-	 * @see #setTachanunRecitedEndOfTishrei(tachanunRecitedEndOfTishrei)
+	 * @see #setTachanunRecitedEndOfTishrei(boolean)
 	 */
 	public boolean isTachanunRecitedEndOfTishrei() {
 		return tachanunRecitedEndOfTishrei;
@@ -585,7 +585,7 @@ public class TefilaRules {
 	 * {@link #tachanunRecitedWeekAfterShavuos} and {@link #setTachanunRecited13SivanOutOfIsrael} are set to false.
 	 * 
 	 * @return If <em>tachanun</em> is set to be recited on the 13th of {@link JewishDate#SIVAN <em>Sivan</em>} out of Israel.
-	 * @see #setTachanunRecited13SivanOutOfIsrael(isTachanunRecitedThirteenSivanOutOfIsrael)
+	 * @see #setTachanunRecited13SivanOutOfIsrael(boolean)
 	 * @see #isTachanunRecitedWeekAfterShavuos()
 	 */
 	public boolean isTachanunRecited13SivanOutOfIsrael() {

@@ -1560,10 +1560,10 @@ public class JewishCalendar extends JewishDate {
 	
 	/**
 	 * Returns true if the current day is <em>Isru Chag</em>. The method returns true for the day following <em>Pesach</em>
-	 * <em>Shavuos</em> and <em>Succos</em>. It utilizes {@see #getInIsrael()} to return the proper date.
+	 * <em>Shavuos</em> and <em>Succos</em>. It utilizes {@link #getInIsrael()} to return the proper date.
 	 * 
 	 * @return true if the current day is <em>Isru Chag</em>. The method returns true for the day following <em>Pesach</em>
-	 * <em>Shavuos</em> and <em>Succos</em>. It utilizes {@see #getInIsrael()} to return the proper date.
+	 * <em>Shavuos</em> and <em>Succos</em>. It utilizes {@link #getInIsrael()} to return the proper date.
 	 */
 	public boolean isIsruChag() {
 		int holidayIndex = getYomTovIndex();

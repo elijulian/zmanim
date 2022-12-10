@@ -1,0 +1,59 @@
+name: Bump version and deploy
+
+on:
+  push:
+    branches:
+      - test-merge
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: 8
+          server-username: OSSRH_USERNAME
+          server-password: OSSRH_TOKEN
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+      - name: Bump patch version in pom.xml
+        if: contains(github.event.head_commit.message, '#patch')
+        run: |
+          # Update the patch version in pom.xml
+          mvn validate -DbumpPatch
+      - name: Bump minor version in pom.xml
+        if: contains(github.event.head_commit.message, '#minor')
+        run: |
+          # Update the minor version in pom.xml
+          ls -lart
+          mvn validate -DbumpMinor
+      - name: Bump major version in pom.xml
+        if: contains(github.event.head_commit.message, '#major')
+        run: |
+          # Update the major version in pom.xml
+          mvn validate -DbumpMajor
+      - name: Commit and push changes
+        if: contains(github.event.head_commit.message, '#major') || contains(github.event.head_commit.message, '#minor') || contains(github.event.head_commit.message, '#patch')
+        run: |
+          # Use the secrets stored in the GITHUB_TOKEN and GITHUB_USERNAME
+          # secrets to configure the git credentials
+          git config --local user.email "${{ secrets.GITHUB_USERNAME }}"
+          git config --local user.name "${{ secrets.GITHUB_TOKEN }}"
+          git add pom.xml
+          git commit -m "Bump version in pom.xml"
+          git push
+      - name: Get version from pom.xml
+        run: |
+          # Extract the version number from pom.xml
+          # Replace X.X.X with the current version number
+          version=$(grep -Eo '[0-9]*\.[0-9]*\.[0-9]*' pom.xml | head -1)
+      - name: Deploy to server
+        # Add your deployment commands here
+        run: |
+          # Use the version number from the pom.xml file
+          mvn deploy -DskipTests -Dversion=$version
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
