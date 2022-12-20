@@ -59,4 +59,4 @@ jobs:
         # Add your deployment commands here
         run: |
           # Use the version number from the pom.xml file
-          mvn deploy -DskipTests -Dversion=$version
+          mvn deploy -X -DskipTests -Dversion=$version
